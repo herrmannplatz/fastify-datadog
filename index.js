@@ -1,5 +1,5 @@
 const fp = require('fastify-plugin')
-const startTimeSymbol = new Symbol('startTime')
+const startTimeSymbol = Symbol('startTime')
 
 const fastifyDatadog = (fastify, {
   dogstatsd,
@@ -45,7 +45,7 @@ const fastifyDatadog = (fastify, {
 
   const now = () => {
     const [seconds, nanoseconds] = process.hrtime()
-    return Math.round(seconds * 1e3 + nanoseconds / 1e6)
+    return seconds * 1e3 + nanoseconds / 1e6
   }
 
   next()

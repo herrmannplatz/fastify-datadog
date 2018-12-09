@@ -32,7 +32,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com/herrmannplatz/fastify-datadog.git"
+    "url": "git+https://github.com/herrmannplatz/fastify-datadog.git"
   },
   "config": {
     "commitizen": {
