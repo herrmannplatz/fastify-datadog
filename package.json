@@ -1,0 +1,42 @@
+{
+  "name": "fastify-datadog",
+  "version": "0.0.0-semantic-release",
+  "description": "module fastify-datadog",
+  "main": "index.js",
+  "scripts": {
+    "commit": "git-cz",
+    "lint": "standard",
+    "format": "standard --fix",
+    "test": "jest --coverage",
+    "posttest": "npm run lint",
+    "precommit": "npm test",
+    "commitmsg": "validate-commit-msg",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+  },
+  "keywords": [],
+  "author": "herrmannplatz <rene@herrmannplatz.de>",
+  "license": "MIT",
+  "dependencies": {
+    "fastify-plugin": "^1.3.0",
+    "marky": "^1.2.1"
+  },
+  "devDependencies": {
+    "commitizen": "^2.9.6",
+    "cz-conventional-changelog": "^2.1.0",
+    "fastify": "^1.13.1",
+    "husky": "^0.14.3",
+    "jest": "^21.2.1",
+    "semantic-release": "^8.2.0",
+    "standard": "^10.0.3",
+    "validate-commit-msg": "^2.14.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com/herrmannplatz/fastify-datadog.git"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  }
+}
