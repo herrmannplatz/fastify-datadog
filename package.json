@@ -9,7 +9,12 @@
     "posttest": "standard",
     "precommit": "npm test"
   },
-  "keywords": [],
+  "keywords": [
+    "datadog",
+    "fastify",
+    "plugin",
+    "statsd"
+  ],
   "author": "herrmannplatz <rene@herrmannplatz.de>",
   "license": "MIT",
   "dependencies": {
