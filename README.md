@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/fastify-datadog.svg)](https://badge.fury.io/js/fastify-datadog) [![Build Status](https://travis-ci.org/herrmannplatz/fastify-datadog.svg?branch=master)](https://travis-ci.org/herrmannplatz/fastify-datadog)
 
-> 🐶 [https://www.datadoghq.com](Datadog) plugin for fastify. Incluenced by [https://github.com/AppPress/node-connect-datadog](node-connect-datadog)
+> 🐶 [Datadog](https://www.datadoghq.com) plugin for fastify. Influenced by [node-connect-datadog](https://github.com/AppPress/node-connect-datadog)
 
 ## Install
 ```
