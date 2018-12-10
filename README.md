@@ -12,7 +12,11 @@ $ npm install fastify-datadog
 ## Usage
 
 ```js
-fastify.register(require('fastify-datadog'), {})
+const StatsD = require('hot-shots')
+
+fastify.register(require('fastify-datadog'), {
+  dogstatsd: new StatsD()
+})
 ```
 
 ## Options
