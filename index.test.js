@@ -22,7 +22,7 @@ describe('fastify-datadog', () => {
   it('should track response time', async () => {
     fastify.register(fastifyDatatog, { dogstatsd: dogstatsdMock })
 
-    fastify.get('/users/:id', (req, reply) => reply.send(200))
+    fastify.get('/users/:id', async () => 200)
 
     await fastify.inject('/users/123456')
 
@@ -35,7 +35,7 @@ describe('fastify-datadog', () => {
   it('should track method', async () => {
     fastify.register(fastifyDatatog, { dogstatsd: dogstatsdMock, method: true })
 
-    fastify.get('/users/:id', (req, reply) => reply.send(200))
+    fastify.get('/users/:id', async () => 200)
 
     await fastify.inject('/users/123456')
 
@@ -49,7 +49,7 @@ describe('fastify-datadog', () => {
   it('should track response code', async () => {
     fastify.register(fastifyDatatog, { dogstatsd: dogstatsdMock, responseCode: true })
 
-    fastify.get('/users/:id', (req, reply) => reply.send(200))
+    fastify.get('/users/:id', async () => 200)
 
     await fastify.inject('/users/123456')
 
@@ -67,7 +67,7 @@ describe('fastify-datadog', () => {
   it('should track method', async () => {
     fastify.register(fastifyDatatog, { dogstatsd: dogstatsdMock, path: true })
 
-    fastify.get('/users/:id', (req, reply) => reply.send(200))
+    fastify.get('/users/:id', async () => 200)
 
     await fastify.inject('/users/123456')
 

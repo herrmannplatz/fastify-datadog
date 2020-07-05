@@ -10,28 +10,36 @@ const fastifyDatadog = (fastify, {
   method = false,
   path = false,
   responseCode = false
-} = {}, next) => {
+} = {}, done) => {
   if (dogstatsd == null) {
     throw new Error('Missing dogstatsd option.')
   }
 
-  fastify.addHook('onRequest', (req, reply, next) => {
-    req[startTimeSymbol] = now()
+  const now = () => {
+    const [seconds, nanoseconds] = process.hrtime()
+    return seconds * 1e3 + nanoseconds / 1e6
+  }
+
+  fastify.addHook('onRequest', (request, reply, next) => {
+    request.raw[startTimeSymbol] = now()
     next()
   })
 
-  fastify.addHook('onSend', ({ raw: request }, reply, payload, next) => {
-    const { context, res: { statusCode } } = reply
+  fastify.addHook('onSend', (request, reply, payload, next) => {
+    const { raw: req } = request
+
+    const { context, raw: { statusCode } } = reply
+
     const { config: { url: route } } = context
 
-    var statTags = [`route:${route}`, ...tags]
+    const statTags = [`route:${route}`, ...tags]
 
     if (method) {
-      statTags.push(`method:${request.method.toLowerCase()}`)
+      statTags.push(`method:${req.method.toLowerCase()}`)
     }
 
     if (path !== false) {
-      statTags.push(`path:${request.url}`)
+      statTags.push(`path:${req.url}`)
     }
 
     if (responseCode) {
@@ -40,20 +48,15 @@ const fastifyDatadog = (fastify, {
       dogstatsd.increment(`${stat}.response_code.all`, 1, statTags)
     }
 
-    dogstatsd.histogram(`${stat}.response_time`, now() - request[startTimeSymbol], 1, statTags)
+    dogstatsd.histogram(`${stat}.response_time`, now() - req[startTimeSymbol], 1, statTags)
 
     next()
   })
 
-  const now = () => {
-    const [seconds, nanoseconds] = process.hrtime()
-    return seconds * 1e3 + nanoseconds / 1e6
-  }
-
-  next()
+  done()
 }
 
 module.exports = fp(fastifyDatadog, {
-  fastify: '>=1.0.0',
+  fastify: '3.x',
   name: 'fastify-datadog'
 })
