@@ -1,5 +1,5 @@
 {
-  "name": "fastify-datadog",
+  "name": "@condenast/fastify-datadog",
   "version": "0.0.0-semantic-release",
   "description": "module fastify-datadog",
   "main": "index.js",
@@ -39,7 +39,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/herrmannplatz/fastify-datadog.git"
+    "url": "git+https://github.com/CondeNast/fastify-datadog"
   },
   "config": {
     "commitizen": {
