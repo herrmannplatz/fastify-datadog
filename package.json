@@ -8,7 +8,8 @@
     "commit": "git-cz",
     "test": "jest --coverage && tsd",
     "posttest": "standard",
-    "precommit": "npm test"
+    "precommit": "npm test",
+    "prepare": "husky install"
   },
   "keywords": [
     "datadog",
@@ -22,12 +23,14 @@
     "fastify-plugin": "^1.6.1"
   },
   "devDependencies": {
+    "@commitlint/cli": "12.1.4",
+    "@commitlint/config-conventional": "12.1.4",
     "@types/node": "^14.0.14",
     "commitizen": "^3.0.4",
     "cz-conventional-changelog": "^2.1.0",
     "fastify": "^3.0.0",
     "hot-shots": "^7.7.1",
-    "husky": "^1.1.4",
+    "husky": "^6.0.0",
     "jest": "^26.1.0",
     "semantic-release": "^15.12.0",
     "standard": "^12.0.1",
