@@ -51,6 +51,8 @@ async function fastifyDatadog (fastify, options = {}) {
 
     dogstatsd.histogram(`${stat}.response_time`, resposeTime, 1, statTags)
   })
+
+  fastify.decorate('dogstatsd', dogstatsd)
 }
 
 module.exports = fp(fastifyDatadog, {
