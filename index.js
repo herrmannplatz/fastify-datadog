@@ -24,11 +24,11 @@ async function fastifyDatadog (fastify, options = {}) {
     return seconds * 1e3 + nanoseconds / 1e6
   }
 
-  let dynamicTags = tags;
+  let dynamicTags = tags
   fastify.addHook('onRequest', async (req, reply) => {
     req[startTimeSymbol] = now()
     if (typeof tags === 'function') {
-      dynamicTags = tags(req);
+      dynamicTags = tags(req)
     }
   })
 
