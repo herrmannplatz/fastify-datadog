@@ -35,7 +35,7 @@ async function fastifyDatadog (fastify, options = {}) {
   fastify.addHook('onSend', async (req, reply) => {
     const { context, statusCode } = reply
 
-    const statTags = [`route:${context.config.url}`, ...dynamicTags]
+    const statTags = [`route:${context.config.url}`].concat(dynamicTags)
 
     if (method) {
       statTags.push(`method:${req.method.toLowerCase()}`)
