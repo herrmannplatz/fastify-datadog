@@ -24,14 +24,18 @@ async function fastifyDatadog (fastify, options = {}) {
     return seconds * 1e3 + nanoseconds / 1e6
   }
 
+  let dynamicTags = tags;
   fastify.addHook('onRequest', async (req, reply) => {
     req[startTimeSymbol] = now()
+    if (typeof tags === 'function') {
+      dynamicTags = tags(req);
+    }
   })
 
   fastify.addHook('onSend', async (req, reply) => {
     const { context, statusCode } = reply
 
-    const statTags = [`route:${context.config.url}`, ...tags]
+    const statTags = [`route:${context.config.url}`, ...dynamicTags]
 
     if (method) {
       statTags.push(`method:${req.method.toLowerCase()}`)
