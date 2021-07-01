@@ -1,6 +1,6 @@
 {
   "name": "@condenast/fastify-datadog",
-  "version": "0.0.0-semantic-release",
+  "version": "0.0.2",
   "description": "module fastify-datadog",
   "main": "index.js",
   "types": "index.d.ts",
