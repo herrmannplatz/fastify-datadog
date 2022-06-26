@@ -1,6 +1,6 @@
 /// <reference types="node" />
 
-import { FastifyPlugin } from 'fastify';
+import { FastifyPluginCallback } from 'fastify';
 import { StatsD } from 'hot-shots';
 
 export interface FastifyDatadogOptions {
@@ -12,6 +12,6 @@ export interface FastifyDatadogOptions {
   responseCode?: boolean
 }
 
-declare const fastifyDatadog: FastifyPlugin<FastifyDatadogOptions>;
+declare const fastifyDatadog: FastifyPluginCallback<FastifyDatadogOptions>;
 
 export default fastifyDatadog;
