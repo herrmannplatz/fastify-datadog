@@ -19,6 +19,11 @@ describe('fastify-datadog', () => {
     jest.clearAllMocks()
   })
 
+  it('should throw error if dogstatsd option is missing', async () => {
+    await expect(fastify.register(fastifyDatatog, { dogstatsd: undefined }))
+      .rejects.toEqual(Error('Missing dogstatsd option.'))
+  })
+
   it('should track response time', async () => {
     fastify.register(fastifyDatatog, { dogstatsd: dogstatsdMock })
 
