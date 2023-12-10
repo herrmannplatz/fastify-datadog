@@ -5,7 +5,9 @@
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
-    "test": "jest --coverage && tsd",
+    "test": "npm run test:unit && npm run test:typescript",
+    "test:unit": "jest --coverage",
+    "test:typescript": "tsd",
     "posttest": "npm run lint",
     "lint": "standard",
     "lint:fix": "standard --fix"
