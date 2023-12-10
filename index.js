@@ -29,9 +29,9 @@ async function fastifyDatadog (fastify, options = {}) {
   })
 
   fastify.addHook('onSend', async (req, reply) => {
-    const { context, statusCode } = reply
+    const { statusCode } = reply
 
-    const statTags = [`route:${context.config.url}`, ...tags]
+    const statTags = [`route:${req.routeOptions.config.url}`, ...tags]
 
     if (method) {
       statTags.push(`method:${req.method.toLowerCase()}`)
@@ -54,6 +54,6 @@ async function fastifyDatadog (fastify, options = {}) {
 }
 
 module.exports = fp(fastifyDatadog, {
-  fastify: '3.x',
+  fastify: '4.x',
   name: 'fastify-datadog'
 })
