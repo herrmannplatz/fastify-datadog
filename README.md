@@ -1,6 +1,7 @@
 # fastify-datadog
 
-[![npm version](https://badge.fury.io/js/fastify-datadog.svg)](https://badge.fury.io/js/fastify-datadog) [![Build Status](https://travis-ci.org/herrmannplatz/fastify-datadog.svg?branch=master)](https://travis-ci.org/herrmannplatz/fastify-datadog)
+![CI](https://github.com/herrmannplatz/fastify-datadog/actions/workflows/release.yaml/badge.svg)
+[![npm version](https://badge.fury.io/js/fastify-datadog.svg)](https://badge.fury.io/js/fastify-datadog) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://standardjs.com/)
 
 > 🐶 [Datadog](https://www.datadoghq.com) plugin for fastify. Influenced by [node-connect-datadog](https://github.com/AppPress/node-connect-datadog)
 
