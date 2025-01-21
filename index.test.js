@@ -1,10 +1,14 @@
-/* eslint-env jest */
+'use strict'
+
+const { it, mock, describe, beforeEach, afterEach } = require('node:test')
+const assert = require('node:assert')
+
 const Fastify = require('fastify')
 const fastifyDatatog = require('./index')
 
 const dogstatsdMock = {
-  increment: jest.fn(),
-  histogram: jest.fn()
+  increment: mock.fn(),
+  histogram: mock.fn()
 }
 
 describe('fastify-datadog', () => {
@@ -16,12 +20,15 @@ describe('fastify-datadog', () => {
 
   afterEach(() => {
     fastify.close()
-    jest.clearAllMocks()
+    dogstatsdMock.histogram.mock.resetCalls()
+    dogstatsdMock.increment.mock.resetCalls()
   })
 
   it('should throw error if dogstatsd option is missing', async () => {
-    await expect(fastify.register(fastifyDatatog, { dogstatsd: undefined }))
-      .rejects.toEqual(Error('Missing dogstatsd option.'))
+    await assert.rejects(
+      async () => fastify.register(fastifyDatatog, { dogstatsd: undefined }),
+      { message: 'Missing dogstatsd option.' }
+    )
   })
 
   it('should track response time', async () => {
@@ -31,10 +38,10 @@ describe('fastify-datadog', () => {
 
     await fastify.inject('/users/123456')
 
-    expect(dogstatsdMock.histogram.mock.calls.length).toEqual(1)
-    expect(dogstatsdMock.histogram.mock.calls[0][0]).toEqual('node.fastify.router.response_time')
-    expect(dogstatsdMock.histogram.mock.calls[0][1]).toBeGreaterThan(0)
-    expect(dogstatsdMock.histogram.mock.calls[0][3][0]).toEqual('route:/users/:id')
+    assert.strictEqual(dogstatsdMock.histogram.mock.calls.length, 1)
+    assert.strictEqual(dogstatsdMock.histogram.mock.calls[0].arguments[0], 'node.fastify.router.response_time')
+    assert.strictEqual(dogstatsdMock.histogram.mock.calls[0].arguments[1] > 0, true)
+    assert.strictEqual(dogstatsdMock.histogram.mock.calls[0].arguments[3][0], 'route:/users/:id')
   })
 
   it('should track method', async () => {
@@ -44,11 +51,11 @@ describe('fastify-datadog', () => {
 
     await fastify.inject('/users/123456')
 
-    expect(dogstatsdMock.histogram.mock.calls.length).toEqual(1)
-    expect(dogstatsdMock.histogram.mock.calls[0][0]).toEqual('node.fastify.router.response_time')
-    expect(dogstatsdMock.histogram.mock.calls[0][1]).toBeGreaterThan(0)
-    expect(dogstatsdMock.histogram.mock.calls[0][3][0]).toEqual('route:/users/:id')
-    expect(dogstatsdMock.histogram.mock.calls[0][3][1]).toEqual('method:get')
+    assert.strictEqual(dogstatsdMock.histogram.mock.calls.length, 1)
+    assert.strictEqual(dogstatsdMock.histogram.mock.calls[0].arguments[0], 'node.fastify.router.response_time')
+    assert.strictEqual(dogstatsdMock.histogram.mock.calls[0].arguments[1] > 0, true)
+    assert.strictEqual(dogstatsdMock.histogram.mock.calls[0].arguments[3][0], 'route:/users/:id')
+    assert.strictEqual(dogstatsdMock.histogram.mock.calls[0].arguments[3][1], 'method:get')
   })
 
   it('should track response code', async () => {
@@ -58,15 +65,15 @@ describe('fastify-datadog', () => {
 
     await fastify.inject('/users/123456')
 
-    expect(dogstatsdMock.histogram.mock.calls.length).toEqual(1)
-    expect(dogstatsdMock.histogram.mock.calls[0][0]).toEqual('node.fastify.router.response_time')
-    expect(dogstatsdMock.histogram.mock.calls[0][1]).toBeGreaterThan(0)
-    expect(dogstatsdMock.histogram.mock.calls[0][3][0]).toEqual('route:/users/:id')
-    expect(dogstatsdMock.histogram.mock.calls[0][3][1]).toEqual('response_code:200')
+    assert.strictEqual(dogstatsdMock.histogram.mock.calls.length, 1)
+    assert.strictEqual(dogstatsdMock.histogram.mock.calls[0].arguments[0], 'node.fastify.router.response_time')
+    assert.strictEqual(dogstatsdMock.histogram.mock.calls[0].arguments[1] > 0, true)
+    assert.strictEqual(dogstatsdMock.histogram.mock.calls[0].arguments[3][0], 'route:/users/:id')
+    assert.strictEqual(dogstatsdMock.histogram.mock.calls[0].arguments[3][1], 'response_code:200')
 
-    expect(dogstatsdMock.increment.mock.calls.length).toEqual(2)
-    expect(dogstatsdMock.increment.mock.calls[0][0]).toEqual('node.fastify.router.response_code.200')
-    expect(dogstatsdMock.increment.mock.calls[1][0]).toEqual('node.fastify.router.response_code.all')
+    assert.strictEqual(dogstatsdMock.increment.mock.calls.length, 2)
+    assert.strictEqual(dogstatsdMock.increment.mock.calls[0].arguments[0], 'node.fastify.router.response_code.200')
+    assert.strictEqual(dogstatsdMock.increment.mock.calls[1].arguments[0], 'node.fastify.router.response_code.all')
   })
 
   it('should track method', async () => {
@@ -76,10 +83,10 @@ describe('fastify-datadog', () => {
 
     await fastify.inject('/users/123456')
 
-    expect(dogstatsdMock.histogram.mock.calls.length).toEqual(1)
-    expect(dogstatsdMock.histogram.mock.calls[0][0]).toEqual('node.fastify.router.response_time')
-    expect(dogstatsdMock.histogram.mock.calls[0][1]).toBeGreaterThan(0)
-    expect(dogstatsdMock.histogram.mock.calls[0][3][0]).toEqual('route:/users/:id')
-    expect(dogstatsdMock.histogram.mock.calls[0][3][1]).toEqual('path:/users/123456')
+    assert.strictEqual(dogstatsdMock.histogram.mock.calls.length, 1)
+    assert.strictEqual(dogstatsdMock.histogram.mock.calls[0].arguments[0], 'node.fastify.router.response_time')
+    assert.strictEqual(dogstatsdMock.histogram.mock.calls[0].arguments[1] > 0, true)
+    assert.strictEqual(dogstatsdMock.histogram.mock.calls[0].arguments[3][0], 'route:/users/:id')
+    assert.strictEqual(dogstatsdMock.histogram.mock.calls[0].arguments[3][1], 'path:/users/123456')
   })
 })

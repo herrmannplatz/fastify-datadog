@@ -54,6 +54,6 @@ async function fastifyDatadog (fastify, options = {}) {
 }
 
 module.exports = fp(fastifyDatadog, {
-  fastify: '4.x',
+  fastify: '5.x',
   name: 'fastify-datadog'
 })
